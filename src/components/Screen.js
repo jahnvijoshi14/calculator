@@ -29,7 +29,7 @@ export function Screen() {
     }
   }
 
-  // this function is called when = is pressed for final results
+  // this function is called when = is pressed for final results .
   function handleCalculation() {
     if (value == 'Error') {
       return;
