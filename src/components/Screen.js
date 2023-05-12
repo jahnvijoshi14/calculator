@@ -7,14 +7,14 @@ export function Screen() {
   let [value, setValue] = useState('');
 
   //preData contains the previous value , which we always need to apply check
-  let prevData = value + '';
+  let prevData = value;
 
   // expression is which is made and passed to eval() function of javascript
   let [expression, setExp] = useState('');
 
   //this is used to check that digits should not start with 0 ex: 000007, 0812 , 09
   function newExpression() {
-    while (prevData.startsWith('0')) {
+    while (prevData.startsWith('0') && prevData.length > 1) {
       let preLength = prevData.length;
       let newPreData = prevData.substring(1);
       expression =
@@ -34,6 +34,11 @@ export function Screen() {
     newExpression();
 
     let result = eval(expression);
+    if (result == 'Infinity') {
+      setExp('');
+      setValue('Error');
+      return;
+    }
     prevData = result + '';
     setExp(result + '');
     setValue(result + '');
@@ -62,6 +67,12 @@ export function Screen() {
 
   // this is used to concat digits and expressions so that we can evaluate the correct results
   function conCat(data) {
+    if (prevData === 'Error') {
+      setValue(data + '');
+      expression = expression + data + '';
+      setExp(expression);
+      return;
+    }
     if (data == '±') {
       let len = prevData.length;
 
