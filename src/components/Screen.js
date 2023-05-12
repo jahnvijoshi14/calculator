@@ -31,6 +31,9 @@ export function Screen() {
 
   // this function is called when = is pressed for final results
   function handleCalculation() {
+    if (value == 'Error') {
+      return;
+    }
     newExpression();
 
     let result = eval(expression);
@@ -59,6 +62,8 @@ export function Screen() {
       operator == '-' ||
       operator == '*' ||
       operator == '/' ||
+      operator == '÷' ||
+      operator == '×' ||
       operator == '%'
     ) {
       return true;
@@ -68,6 +73,9 @@ export function Screen() {
   // this is used to concat digits and expressions so that we can evaluate the correct results
   function conCat(data) {
     if (prevData === 'Error') {
+      if (check(data + '') || data == '±') {
+        return;
+      }
       setValue(data + '');
       expression = expression + data + '';
       setExp(expression);
