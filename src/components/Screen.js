@@ -14,13 +14,14 @@ export function Screen() {
 
   //this is used to check that digits should not start with 0 ex: 000007, 0812 , 09
   function newExpression() {
-    if (prevData.startsWith('0')) {
+    while (prevData.startsWith('0')) {
       let preLength = prevData.length;
       let newPreData = prevData.substring(1);
       expression =
         expression.substring(0, expression.length - preLength) +
         newPreData +
         '';
+      prevData = newPreData;
       console.log(
         'yes you are write',
         expression.substring(expression.length - preLength)
@@ -90,7 +91,11 @@ export function Screen() {
       if (data === '%') {
         let calc = prevData / 100;
         setValue(calc + '');
-        setExp(calc + '');
+        expression =
+          expression.substring(0, expression.length - prevData.length) +
+          calc +
+          '';
+        setExp(expression + '');
         return;
       }
 
